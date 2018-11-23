@@ -1,0 +1,11 @@
+# src/Resources/config/routes/routingApi/api.yaml
+url_get_method:
+    # url match /api/{id}
+    path: /{id}
+    controller: App\Controller\ApiController::getMethod
+    methods:  [GET]
+    
+url_post_method:
+    path: /{id}
+    controller: App\Controller\ApiController::postMethod
+    methods:  [POST]

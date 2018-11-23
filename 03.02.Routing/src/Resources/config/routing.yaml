@@ -1,0 +1,10 @@
+# src/Resources/config/routing.yaml
+routing-api:
+    prefix: '/api'
+    resource: 'routes/routingApi/'
+    type: directory
+
+routing-views:
+    prefix: '/'
+    resource: 'routes/routingViews/'
+    type: directory

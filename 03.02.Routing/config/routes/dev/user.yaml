@@ -1,0 +1,9 @@
+# src/Resources/config/routes/routingViews/user.yaml
+user_getListUserTest:
+    path: /auth/list_user/test
+    controller: App\Controller\UserController::getListUser
+user_getDataUserTest:
+    path: /auth/get_data_user/test/{id}
+    controller: App\Controller\UserController::getDataUser
+    requirements:
+        id: '\d+'
