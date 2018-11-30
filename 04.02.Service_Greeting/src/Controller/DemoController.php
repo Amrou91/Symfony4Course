@@ -1,5 +1,5 @@
 <?php
-
+// src/controller/DemoController.php
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -8,15 +8,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 use App\Services\Greeting;
 
-class DemoController extends AbstractController
+class DemoController extends BaseController
 {
     /**
      * @Route("/demo/{name}", name="demo")
      */
-    public function index()
+    public function index($name)
     {
-        dump($name);
-        $greet = $greeting->greet($name);
+        dump($this->isMaria($name));
+        $greet = $this->greet->greet($name);
         return new Response($greet);
     }
 }
