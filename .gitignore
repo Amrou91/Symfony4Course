@@ -3,3 +3,4 @@ server_run.txt
 composer.phar
 php.ini
 php_errors.log
+dump.sql
