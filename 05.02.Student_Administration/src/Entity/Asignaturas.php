@@ -55,21 +55,6 @@ class Asignaturas
      * @ORM\Column(name="grado_id", type="integer", nullable=false)
      */
     private $gradoId;
-    
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Alumnos", inversedBy="asignatura")
-     * @ORM\JoinTable(name="alumnos_asignaturas",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="asignatura_id", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="alumno_id", referencedColumnName="id")
-     *   }
-     * )
-     */
-    private $alumno;
 
     public function getId(): ?int
     {
@@ -135,31 +120,6 @@ class Asignaturas
 
         return $this;
     }
-    
-    /**
-     * @return Collection|Alumnos[]
-     */
-    public function getAlumno(): Collection
-    {
-        return $this->alumno;
-    }
 
-    public function addAlumno(Alumnos $alumno): self
-    {
-        if (!$this->alumno->contains($alumno)) {
-            $this->alumno[] = $alumno;
-        }
-
-        return $this;
-    }
-
-    public function removeAlumno(Alumnos $alumno): self
-    {
-        if ($this->alumno->contains($alumno)) {
-            $this->alumno->removeElement($alumno);
-        }
-
-        return $this;
-    }
 
 }

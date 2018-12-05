@@ -76,21 +76,6 @@ class Alumnos
      * @ORM\Column(name="grado_id", type="integer", nullable=true)
      */
     private $gradoId;
-    
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Asignaturas", mappedBy="alumno")
-     */
-    private $asignatura;
-    
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->asignatura = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -193,32 +178,5 @@ class Alumnos
         return $this;
     }
 
-    /**
-     * @return Collection|Asignaturas[]
-     */
-    public function getAsignatura(): Collection
-    {
-        return $this->asignatura;
-    }
-
-    public function addAsignatura(Asignaturas $asignatura): self
-    {
-        if (!$this->asignatura->contains($asignatura)) {
-            $this->asignatura[] = $asignatura;
-            $asignatura->addAlumno($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAsignatura(Asignaturas $asignatura): self
-    {
-        if ($this->asignatura->contains($asignatura)) {
-            $this->asignatura->removeElement($asignatura);
-            $asignatura->removeAlumno($this);
-        }
-
-        return $this;
-    }
 
 }
