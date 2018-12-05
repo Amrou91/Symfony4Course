@@ -52,24 +52,24 @@ class DeportesController extends Controller {
      *  requirements={"pagina"="\d+"},
      *  defaults={"seccion":"tenis"})
      */ 
-    public function lista($seccion, $pagina = 1) {
+    // public function lista($seccion, $pagina = 1) {
         
-        $sports = ['futbol','tenis','rugby'];
+    //     $sports = ['futbol','tenis','rugby'];
         
-        if (!in_array($seccion,$sports)) {
-            throw $this->createNoTFoundException('Error 404 este deporte no está en nuestra Base de Datos');
-        }
+    //     if (!in_array($seccion,$sports)) {
+    //         throw $this->createNoTFoundException('Error 404 este deporte no está en nuestra Base de Datos');
+    //     }
         
-        return new Response(sprintf('Deportes sección: %s, listado de noticias página %s', $seccion, $pagina));
-    }
+    //     return new Response(sprintf('Deportes sección: %s, listado de noticias página %s', $seccion, $pagina));
+    // }
     
     /**
      * @Route("/deportes/{seccion}/{slug}",
      *  defaults={"seccion":"tenis"})
      */
-    public function noticia($slug, $seccion) {
-        return new Response(sprintf('Noticia de %s, con url dinámica=%s'), $seccion, $slug);
-    }
+    // public function noticia($slug, $seccion) {
+    //     return new Response(sprintf('Noticia de %s, con url dinámica=%s'), $seccion, $slug);
+    // }
     
     
     /**
@@ -99,17 +99,17 @@ class DeportesController extends Controller {
      *  }
      * )
      */
-    public function rutaAvanzada($_idioma, $fecha, $seccion, $equipo, $slug) {
+    // public function rutaAvanzada($_idioma, $fecha, $seccion, $equipo, $slug) {
         
-        $sports = ["valencia", "barcelona","federer", "rafa-nadal"];
+    //     $sports = ["valencia", "barcelona","federer", "rafa-nadal"];
         
-        if (!in_array($equipo,$sports)) {
-            return $this->redirectToRoute('inicio');
-        }
+    //     if (!in_array($equipo,$sports)) {
+    //         return $this->redirectToRoute('inicio');
+    //     }
         
-        return new Response(sprintf('Mi noticia en idioma=%s,fecha=%s, deporte=%s, equipo=%s, noticia=%s',
-            $_idioma,$fecha,$seccion,$equipo,$slug)
-        );
-    }
+    //     return new Response(sprintf('Mi noticia en idioma=%s,fecha=%s, deporte=%s, equipo=%s, noticia=%s',
+    //         $_idioma,$fecha,$seccion,$equipo,$slug)
+    //     );
+    // }
     
 }
