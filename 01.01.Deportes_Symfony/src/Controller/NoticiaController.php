@@ -66,33 +66,5 @@ class NoticiaController extends AbstractController
         
         return new Response("Noticia eliminada!");
     }
-    
-    /**
-     * @Route("/deportes/{seccion}/{pagina}", name="lista_paginas",
-     *  requirements={"pagina"="\d+"},
-     *  defaults={"seccion":"Tenis"}
-     * )
-     */
-    public function lista($pagina=1, $seccion) {
-        
-        $em = $this->getDoctrine()->getManager();
-        
-        $repository = $em->getRepository(Noticia::class);
-        
-        // Buscamos las noticias de una sección
-        $noticiaSec = $repository->findOneBy(['seccion' => $seccion]);
-        
-        // Si la sección no existe saltará una excepción
-        
-        if (!$noticiaSec) {
-            throw $this->createNotFoundException('Error 404 este deporte no está en nuestra Base de Datos');
-        }
-        
-        // Almacenamos todas las noticias de una sección en una lista
-        $noticias = $repository->findBy(['seccion' => $seccion]);
-        
-        return new Response("Hay un total de ".count($noticias)." noticas de la sección de ".$seccion);
-    }
-    
 
 }

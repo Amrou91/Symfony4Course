@@ -6,14 +6,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Entity\Noticia;
 
 class DeportesController extends Controller {
     
     /**
-     * @Route("/", name="inicio") 
+     * @Route("/deportes", name="inicio") 
      */
-    public function inicio() {
-        return new Response('Mi primera pagina en Symfony!');
+    public function inicio($texto = "Mi página de deportes!!") {
+        return $this->render("base.html.twig",[
+            'texto'=>$texto
+        ]);
     }
     
     /**
@@ -50,26 +53,63 @@ class DeportesController extends Controller {
     /**
      * @Route("/deportes/{seccion}/{pagina}", name="lista_paginas",
      *  requirements={"pagina"="\d+"},
-     *  defaults={"seccion":"tenis"})
-     */ 
-    // public function lista($seccion, $pagina = 1) {
+     *  defaults={"seccion":"Tenis"}
+     * )
+     */
+    public function lista($pagina=1, $seccion) {
         
-    //     $sports = ['futbol','tenis','rugby'];
+        $em = $this->getDoctrine()->getManager();
         
-    //     if (!in_array($seccion,$sports)) {
-    //         throw $this->createNoTFoundException('Error 404 este deporte no está en nuestra Base de Datos');
-    //     }
+        $repository = $em->getRepository(Noticia::class);
         
-    //     return new Response(sprintf('Deportes sección: %s, listado de noticias página %s', $seccion, $pagina));
-    // }
+        // Buscamos las noticias de una sección
+        $noticiaSec = $repository->findOneBy(['seccion' => $seccion]);
+        
+        // Si la sección no existe saltará una excepción
+        
+        if (!$noticiaSec) {
+            //throw $this->createNotFoundException('Error 404 este deporte no está en nuestra Base de Datos');
+            
+            return $this->render('base.html.twig',['texto' => 'Error 404 Página no econtrada']);
+        }
+        
+        // Almacenamos todas las noticias de una sección en una lista
+        $noticias = $repository->findBy(['seccion' => $seccion]);
+        
+        return $this->render('noticias/listar.html.twig', [
+            // La función str_replace elimina los símbolos - de los títulos
+            'titulo' => ucwords(str_replace('-', ' ', $seccion)),
+            'noticias'=>$noticias
+        ]);
+
+    }
     
     /**
-     * @Route("/deportes/{seccion}/{slug}",
-     *  defaults={"seccion":"tenis"})
+     * @Route("/deportes/{seccion}/{titular}",
+     *  defaults={"seccion":"Tenis"}, name="verNoticia")
      */
-    // public function noticia($slug, $seccion) {
-    //     return new Response(sprintf('Noticia de %s, con url dinámica=%s'), $seccion, $slug);
-    // }
+    public function noticia($titular, $seccion) {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(Noticia::class);
+        
+        $noticia = $repository->findOneBy(['textoTitular' => $titular]);
+        
+        // Si la noticia que buscamos no se encuentra lanzaremos error 404
+        if (!$noticia) {
+            // Ahora que controlamos el manejo de plantilla twig, vamos a
+            // redirigir al usuario a la página de inicio
+            // y mostraremos el error 404, para así no mostrar la página de
+            // errores generica de symfony
+            throw $this->createNotFoundException('Error 404 este deporte no está en nuestra Base de Datos ');
+            
+            return $this->render('base.html.twig',['texto' => 'Error 404 Página no econtrada']);
+        }
+        
+        return $this->render('noticias/noticia.html.twig', [
+                'titulo' => ucwords(str_replace('-',' ',$titular)),
+                'noticias' => $noticia,
+            ]);
+    }
     
     
     /**
