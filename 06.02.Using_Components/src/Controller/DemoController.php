@@ -12,8 +12,10 @@ class DemoController extends AbstractController
      */
     public function index()
     {
+        $script = '<script>alert("Hello! I am an alert box!!");</script>';
         return $this->render('demo/index.html.twig', [
             'controller_name' => 'DemoController',
+            'script' => $script,
         ]);
     }
 }

@@ -26,5 +26,8 @@
     <!--begin: Datatable -->
         {% block table_patients %} {{ block('parent_table_patients') }} {% endblock table_patients %}
     <!--end: Datatable -->
+   {# código script en variable #}
+       {{script | raw }}
+   {# código script en variable #}
 </div>
 {% endblock %}
