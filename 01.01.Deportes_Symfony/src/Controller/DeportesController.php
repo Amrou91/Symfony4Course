@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\Noticia;
 
 class DeportesController extends Controller {
@@ -18,6 +19,23 @@ class DeportesController extends Controller {
             'texto'=>$texto
         ]);
     }
+    
+    
+    /**
+     * @Route("/deportes/login", name="login_seguro")
+     */
+    public function loginUsuario(Request $request, AuthenticationUtils $authUtils) {
+        // Capturamos el error de autentificación
+        $error = $authUtils->getLastAuthenticationError();
+        // Último nombre de usuario autentificado
+        $lastUsername = $authUtils->getLastUsername();
+        
+        return $this->render('Security/login.html.twig', [
+                'last_username' => $lastUsername,
+                'error' => $error,
+            ]);
+    }
+    
     
     /**
      * @Route("/deportes/usuario", name="usuario") 
