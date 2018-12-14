@@ -8,8 +8,26 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\Noticia;
+use App\Entity\Usuario;
 
 class DeportesController extends Controller {
+    
+    /**
+     * @Route("/deportes/nuevousuario", name="usuariobd")
+     */
+    public function nuevoUsuarioBd()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usuario = new Usuario();
+        $usuario->setEmail("jose@imaginaformacion.com");
+        $usuario->setUsername("jose");
+        $password = $this->get('security.password_encoder')
+            ->encodePassword($usuario, "imaginapass");
+        $usuario->setPassword($password);
+        $em->persist($usuario);
+        $em->flush();
+        return new Response("Usuario guardado!");
+    }
     
     /**
      * @Route("/deportes", name="inicio") 

@@ -45,9 +45,16 @@
                     <img class="nav-profile-img rounded-circle" src="{{asset('images/runner.png')}}">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Perfil</a>
-                    <a class="dropdown-item" href="#">Crear Noticia</a>
-                    <a class="dropdown-item" href="#">Logout</a>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a class="dropdown-item" href="#">
+                            {{ app.user.username}}
+                        </a>
+                        <a class="dropdown-item" href="#">Perfil</a>
+                        <a class="dropdown-item" href="#">Crear Noticia</a>
+                        <a class="dropdown-item" href="/deportes/logout">Logout</a>
+                    {% else %}
+                        <a class="dropdown-item" href="/deportes/login">Login</a>
+                    {% endif %}
                 </div>
             </li>
         </ul>

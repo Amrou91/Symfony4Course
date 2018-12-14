@@ -66,5 +66,4 @@ class NoticiaController extends AbstractController
         
         return new Response("Noticia eliminada!");
     }
-
 }
