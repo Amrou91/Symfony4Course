@@ -3,3 +3,5 @@ Hello: Hola
 This friendly message is coming from: Este mensaje amistoso viene de
 Your controller at: Tu controlador es
 Your template at: Tu plantilla es
+Wellcome %name%: Bienvenido %name%
+Hello %name%: Hola %name%
